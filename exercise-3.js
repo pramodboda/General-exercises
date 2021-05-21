@@ -27,16 +27,30 @@ var CPV1_photos = ["//snpi.dell.com/snp/images2/110/a8910375.jpg", "//snpi.dell.
 $(networkingBlock).find('.half-image-module').css({"background-color":"purple"});
 
 
+
+//==================================== Step 3 
+
 //finding pbaText
 var pbaText = $('.half-hero h2.text-white:contains(Power, Batteries & Adapters)');
 
 // finding pbaText parent block
-var pbaBlock = $(pbaText).closest('.half-hero');
+let pbaBlock = $(pbaText).closest('.half-hero');
 
-// finding pbaBlock right image elements
-var pbaTotalProducts = $(pbaBlock).find('*[data-testid="featured_module_image"]');
+// getting price blocks from pbaBlock
+let getPrices = $(pbaBlock).find('*[data-testid="featured_module_price"]');
+let priceArr = [];
+let totalPrice = '';
 
-//Step 3 -
+// Removing string from a string and converting to float numbers
+getPrices.each(function(item){
+  priceArr.push(parseFloat($(this).text().trim().replace('Dell Price $','')));
+  console.log(parseFloat($(this).text().trim().replace('Dell Price $','')));
+})
+
+// sum of priceArr using reduce helper function.
+let totalCal = (accum, currentItem) => accum + currentItem;
+totalPrice = priceArr.reduce(totalCal);
+
 (function(){
-  alert(`Power, Batteries & Adapters Products: ${pbaTotalProducts.length}` );
+  alert(`Power, Batteries & Adapters Products - Total Price: $${totalPrice}` );
 })();
